@@ -1,0 +1,15 @@
+a = float(input("Ingresa el valor A: "))
+b = float(input("Ingresa el valor B: "))
+c = float(input("Ingresa el valor C: "))
+
+print(f"1. {a+b+c}")
+print(f"2. {a*b*c}")
+print(f"3. {a%b}")
+print(f"4. {a**b}")
+print(f"5. {c**(1/2)}")
+print(f"6. el resultado es {(a**2+b**2)**(1/2)}")
+det = (b**2 - 4*a*c)**(1/2)
+print(f"7. raices: {(-b+det)/2*a} y {(-b-det)/2*a}")
+
+print(f"8. La altura máxima no es: {a-b}")
+print(f"8. La altura máxima es: {(a**2-b**2)**(1/2)}")
