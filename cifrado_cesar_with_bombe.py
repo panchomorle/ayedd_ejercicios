@@ -54,30 +54,45 @@ def cifrado(_frase, _desfase):
         frase_cifrada.append("#") #le agrego celdas en 0 por cada letra de la frase
 
     for i in range(0, len(frase_cifrada), 1): # 'i' es un index que itera por cada letra de la frase
-        if frase_split[i] == "ó": ###### Manejo de tildes (no encontré una forma mejor :/)
-            frase_split[i] = "o"
-        elif frase_split[i] == "í":
-            frase_split[i] = "i"
-        elif frase_split[i] == "á":
-            frase_split[i] = "a"
-        elif frase_split[i] == "é":
-            frase_split[i] = "e"
-        elif frase_split[i] == "ú":
-            frase_split[i] = "u"
-        for j in range(0, alfabeto_len, 1): # 'j' es un index que itera por cada letra del alfabeto
-            
-            if frase_split[i] == ' ': #Si habia espacio,
+        #MANEJO DE CARACTERES ESPECIALES CON SECUENCIA DE IF. NO ES LO MAS PRACTICO.
+        if frase_split[i] == ' ': #Si habia espacio,
                 frase_cifrada[i] = ' ' # habrá espacio
-                
-            elif frase_split[i].casefold() == array_alfabeto[j]: #si en i y j las letras coinciden,
-                if j+desfase > alfabeto_len-1: # si al cifrar nos vamos a ir más allá de la z [26],
-                    #en la misma posicion que la frase original, la nueva letra será
-                    #una letra del alfabeto cuyo indice esté a "desfase" de distancia
-                    #PERO restamos la longitud del alfabeto para despreciar el sobrepaso
-                    frase_cifrada[i] = array_alfabeto[j+desfase - alfabeto_len] 
-                else: #si no,
-                    frase_cifrada[i] = array_alfabeto[j+desfase] #simplemente agregamos una letra a "desfase" distancia.
-                break #agregué el break para dejar de iterar sobre el alfabeto si ya se encontró una letra coincidente en la posición 'j'.
+        elif frase_split[i] == '"':
+                frase_cifrada[i] = '"'
+        elif frase_split[i] == '.': 
+                frase_cifrada[i] = '.'
+        elif frase_split[i] == ':': 
+                frase_cifrada[i] = ':' 
+        elif frase_split[i] == ';': 
+                frase_cifrada[i] = ';' 
+        elif frase_split[i] == ',': 
+                frase_cifrada[i] = ',' 
+        elif frase_split[i] == '!': 
+                frase_cifrada[i] = '!'
+        elif frase_split[i] == '?': 
+                frase_cifrada[i] = '?'
+        else:
+            for j in range(0, alfabeto_len, 1): # 'j' es un index que itera por cada letra del alfabeto
+                if frase_split[i] == "ó": ###### Manejo de tildes (no encontré una forma mejor :/)
+                    frase_split[i] = "o"
+                elif frase_split[i] == "í":
+                    frase_split[i] = "i"
+                elif frase_split[i] == "á":
+                    frase_split[i] = "a"
+                elif frase_split[i] == "é":
+                    frase_split[i] = "e"
+                elif frase_split[i] == "ú":
+                    frase_split[i] = "u"
+
+                if frase_split[i].casefold() == array_alfabeto[j]: #si en i y j las letras coinciden,
+                    if j+desfase > alfabeto_len-1: # si al cifrar nos vamos a ir más allá de la z [26],
+                        #en la misma posicion que la frase original, la nueva letra será
+                        #una letra del alfabeto cuyo indice esté a "desfase" de distancia
+                        #PERO restamos la longitud del alfabeto para despreciar el sobrepaso
+                        frase_cifrada[i] = array_alfabeto[j+desfase - alfabeto_len] 
+                    else: #si no,
+                        frase_cifrada[i] = array_alfabeto[j+desfase] #simplemente agregamos una letra a "desfase" distancia.
+                    break #agregué el break para dejar de iterar sobre el alfabeto si ya se encontró una letra coincidente en la posición 'j'.
     resultado = ''.join(frase_cifrada)
     print("\n Su resultado es: ", resultado)
 
@@ -100,19 +115,27 @@ def bombe(_frase):
     
     frase_split = list(frase) #list() crea una lista con cada letra del string, incluye espacios
     frase_desfasada = [] #creo una lista vacia
+    #en esta lista voy a ir agregando desfases de la frase reiteradas veces
+    #y comparandolas con palabras del diccionario hasta que la mayoria tenga sentido
     for i in range(0, len(frase_split), 1): 
         frase_desfasada.append("#") #le agrego celdas en 0 por cada letra de la frase
 
     desfase = 0
     operar = True
+    caracteres_esp= [' ','"','!','?',',','.',':',';']
 
     while operar:
         for i in range(0, len(frase_desfasada), 1): # 'i' es un index que itera por cada letra de la frase
-            for j in range(0, alfabeto_len, 1): # 'j' es un index que itera por cada letra del alfabeto
-                if frase_split[i] == ' ': #Si habia espacio,
-                    frase_desfasada[i] = ' ' # habrá espacio
+            ##ACA HAGO EL CONTROL DE CARACTERES ESPECIALES CON ITERACION
+            for j in range(0, len(caracteres_esp), 1): # 'j' es un index que itera por cada caracter especial
+                if frase_split[i] == caracteres_esp[j]: #Si coincide con un caracter especial
+                    frase_desfasada[i] = caracteres_esp[j] #Se vuelve caracter especial
                     break
-                elif frase_split[i].casefold() == array_alfabeto[j]:
+            
+            ##ACA RECORRO LAS LETRAS DEL ALFABETO
+            for j in range(0, alfabeto_len, 1): # 'j' es un index que itera por cada letra del alfabeto
+                
+                if frase_split[i].casefold() == array_alfabeto[j]:
                     if j+desfase > alfabeto_len-1:
                         frase_desfasada[i] = array_alfabeto[j+desfase - alfabeto_len] #####MANEJAR ERROR POR SI DESFASE DA VUELTA EL ALFABETO
                         break
@@ -131,7 +154,7 @@ def bombe(_frase):
                     acumulador+=1
                     break
 
-        if acumulador >= cant_palabras/2: ##Si el 50% (o más) de las palabras tienen sentido
+        if acumulador >= cant_palabras/4: ##Si el 25% (o más) de las palabras tienen sentido
             operar = False
             print("Frase descifrada con éxito:")
             print(f"El desfase utilizado fue de {desfase*-1} o {alfabeto_len - desfase}")

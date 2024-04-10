@@ -18,14 +18,15 @@ def esta_en_podio(index):
 
 while loop:
     for i in range(len(c)):
-        #r.randint(1,5)
+        
         if c[i] < meta:
             c[i] += r.randint(1,5)
-            
-        elif not esta_en_podio(i+1):
-            podio.append(i+1)
-            
-        print(f"Caballo {i+1}: {c[i]}mts {"-"*c[i]}█╣")
+            skin = "\u265E"
+        else:
+            if not esta_en_podio(i+1):
+                podio.append(i+1)
+            skin = "\u2658"
+        print(f"Caballo {i+1}: {c[i]}mts {"-"*c[i]}{skin}")
 
     time.sleep(1)
     os.system("cls")
