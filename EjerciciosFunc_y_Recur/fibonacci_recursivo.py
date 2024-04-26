@@ -8,4 +8,3 @@ def fibonacci(x):
 
 for i in range(15):
     print(fibonacci(i))
-    i+=1
