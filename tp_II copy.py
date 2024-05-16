@@ -57,7 +57,7 @@ def generador_persona():
     Retorna: una persona o None si no hay nadie para entrar a la cola en ese minuto
     """
     p = None
-    probabilidad_de_entrada = random.randint(1, 10)#probabilidad 1 en 10 de entrar a una sola cola
+    probabilidad_de_entrada = random.randint(1, 5)#probabilidad 20% de entrar a una sola cola
     if(probabilidad_de_entrada == 1):
         p = {
             "grado_de_paciencia" : random.randint(5, 15),#cantidad de minutos que tolera en la cola
