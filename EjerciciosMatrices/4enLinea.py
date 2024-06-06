@@ -32,7 +32,7 @@ def checkWin():
                 ):
                     return turno
     ##Barrido vertical
-    for fila in range(4):
+    for fila in range(3):
         for columna in range(len(tablero[fila])):
             for turno in turnos:
                 if(
