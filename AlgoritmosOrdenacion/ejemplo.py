@@ -4,7 +4,16 @@ class Persona:
         self.edad = edad
     
     def __str__(self):
-        return self.nombre+" "+str(self.edad)
+        return (self.nombre+" "+str(self.edad))
+    
+    def __eq__(self, persona) -> bool:
+        return self.edad == persona.edad
+    
+    def __gt__(self, persona):
+        return self.edad > persona.edad
+    
+    def __lt__(self, persona):
+        return self.edad < persona.edad
 
 lista = [Persona("Pedro", 31), Persona("Blocky", 21), Persona("Furibe", 17), Persona("Gordito", 80), Persona("Jon pol", 40)]
 
@@ -29,12 +38,12 @@ def insertion_sort(array):
 
         #Iterará e irá comparando el valor rescatado con cada
         #elemento de la izquierda
-        while j>= 0 and key.edad < array[j].edad:
+        while j>= 0 and key < array[j]:
             array[j+1] = array[j]
             j = j - 1
         
         array[j+1] = key
 
-print(*lista)
+print("Antes: ", *lista)
 insertion_sort(lista)
-print(*lista)
+print("Despues: ", *lista)

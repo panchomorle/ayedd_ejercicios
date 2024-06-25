@@ -22,7 +22,9 @@ class Arbol:
     def imprimir(self):
         print(self.value)
 
+
 def inorden(n, array: list = []):
+    #si el nodo visitado es una hoja
     if not n.left and not n.right:
         array.append(n)
         return
@@ -38,6 +40,7 @@ def inorden(n, array: list = []):
         inorden(n.right, array)
     else:
         array.append(None)
+        
     return array
 
 def arrayInorden(n):
@@ -143,5 +146,5 @@ raiz.right.left.left.left = Arbol(13)
 
 #
 print(*arrayInorden(raiz))
-print(*arrayPreorden(raiz))
-print(*arrayPostorden(raiz))
+#print(*arrayPreorden(raiz))
+#print(*arrayPostorden(raiz))
